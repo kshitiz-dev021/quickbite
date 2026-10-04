@@ -3,15 +3,18 @@
  */
 
 document.addEventListener('click', (e) => {
-  if (e.target.classList.contains('table-action-btn--approve')) {
-    const cell = e.target.closest('[data-status-cell]');
-    if (cell) cell.innerHTML = status_pill_html('approved');
-  }
-  if (e.target.classList.contains('table-action-btn--reject')) {
-    const cell = e.target.closest('[data-status-cell]');
-    if (cell) cell.innerHTML = '<span class="status-pill status-pill--cancelled">Rejected</span>';
-    const row = e.target.closest('tr');
-    row.style.opacity = '0.55';
+  // If button was clicked (not a normal link)
+  if (e.target.tagName === 'BUTTON') {
+    if (e.target.classList.contains('table-action-btn--approve')) {
+      const cell = e.target.closest('[data-status-cell]');
+      if (cell) cell.innerHTML = status_pill_html('approved');
+    }
+    if (e.target.classList.contains('table-action-btn--reject')) {
+      const cell = e.target.closest('[data-status-cell]');
+      if (cell) cell.innerHTML = '<span class="status-pill status-pill--cancelled">Rejected</span>';
+      const row = e.target.closest('tr');
+      if (row) row.style.opacity = '0.55';
+    }
   }
 });
 

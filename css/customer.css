@@ -521,3 +521,151 @@
   .content-page { padding-top: var(--gap-lg); }
   .auth-page { min-height: auto; }
 }
+
+/* --- Pathao-style enhancements (matching existing palette) --- */
+.vendor-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.vendor-card__thumb {
+  position: relative;
+  height: 120px;
+}
+.vendor-card__badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: var(--color-brand);
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.vendor-card__time-badge {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(43, 33, 24, 0.85);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+}
+.vendor-card__min {
+  font-size: 0.72rem;
+  color: #8C7B70;
+  margin-top: 0.2rem;
+}
+
+/* Promo Voucher Strip */
+.promo-strip {
+  display: flex;
+  gap: var(--gap-md);
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  margin-bottom: var(--gap-xl);
+}
+.promo-banner-card {
+  flex: 0 0 280px;
+  background: #FFF4E5;
+  border: 1px dashed var(--color-brand);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.promo-banner-card__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-base);
+  color: var(--color-brand);
+  margin-bottom: 0.25rem;
+}
+.promo-banner-card__desc {
+  font-size: var(--fs-xs);
+  color: #6E6259;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+.promo-banner-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.promo-banner-card__code {
+  font-family: monospace;
+  font-weight: 700;
+  font-size: var(--fs-xs);
+  background: #fff;
+  border: 1px solid var(--color-border);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  color: var(--color-ink);
+  cursor: pointer;
+}
+
+/* Floating Cart Bar */
+.floating-cart-bar {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2B2118;
+  color: #fff;
+  padding: 0.75rem 1.4rem;
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  display: none;
+  align-items: center;
+  gap: 1.25rem;
+  z-index: 100;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.floating-cart-bar.is-visible {
+  display: flex;
+}
+.floating-cart-bar:hover {
+  background: #111;
+  color: #fff;
+  transform: translateX(-50%) translateY(-2px);
+}
+.floating-cart-bar__badge {
+  background: var(--color-brand);
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+.floating-cart-bar__cta {
+  color: #F8C165;
+  font-size: var(--fs-sm);
+  font-weight: 700;
+}
+
+/* Menu Item Search */
+.menu-search-wrap {
+  margin-bottom: var(--gap-md);
+}
+.menu-search-input {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  font-size: var(--fs-sm);
+  background: var(--color-surface);
+  transition: border-color 0.2s ease;
+}
+.menu-search-input:focus {
+  outline: none;
+  border-color: var(--color-brand);
+}

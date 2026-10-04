@@ -28,9 +28,24 @@ function cartItemCount(cart) {
 }
 
 function updateCartBadge() {
+  const cart = readCart();
+  const count = cartItemCount(cart);
+
   const badge = document.getElementById('cartBadge');
-  if (!badge) return;
-  badge.textContent = cartItemCount(readCart());
+  if (badge) {
+    badge.textContent = count;
+  }
+
+  const floatingBar = document.getElementById('floatingCartBar');
+  const floatingCount = document.getElementById('floatingCartCount');
+  if (floatingBar && floatingCount) {
+    floatingCount.textContent = `${count} item${count === 1 ? '' : 's'}`;
+    if (count > 0) {
+      floatingBar.classList.add('is-visible');
+    } else {
+      floatingBar.classList.remove('is-visible');
+    }
+  }
 }
 
 /* Search panel toggle (only present on customer pages) */

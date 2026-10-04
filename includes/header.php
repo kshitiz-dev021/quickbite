@@ -5,6 +5,8 @@
  * $basePath should be '' for root pages.
  */
 $basePath = $basePath ?? '';
+require_once __DIR__ . '/auth.php';
+$currentUser = current_user();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -19,13 +21,6 @@ $basePath = $basePath ?? '';
 <link rel="stylesheet" href="<?= $basePath ?>css/customer.css">
 </head>
 <body>
-
-<div class="demo-bar">
-  <span class="demo-bar__label">Prototype views</span>
-  <a href="<?= $basePath ?>index.php" class="demo-bar__link <?= ($demoActive ?? '') === 'customer' ? 'is-active' : '' ?>">Customer</a>
-  <a href="<?= $basePath ?>vendor/dashboard.php" class="demo-bar__link">Vendor (Shop Owner)</a>
-  <a href="<?= $basePath ?>admin/overview.php" class="demo-bar__link">Admin (System)</a>
-</div>
 
 <header class="site-header">
   <div class="site-header__inner">
@@ -47,7 +42,23 @@ $basePath = $basePath ?? '';
         <svg width="19" height="19" viewBox="0 0 19 19" fill="none"><path d="M2 2h1.6l1.9 9.7a1.6 1.6 0 0 0 1.6 1.3h7.3a1.6 1.6 0 0 0 1.6-1.3L17.4 5H4.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="7.5" cy="16" r="1.1" fill="currentColor"/><circle cx="14" cy="16" r="1.1" fill="currentColor"/></svg>
         <span class="cart-badge" id="cartBadge">0</span>
       </a>
-      <a href="<?= $basePath ?>login.php" class="btn btn--outline btn--sm">Login</a>
+
+      <?php if ($currentUser): ?>
+        <div class="header-user-menu">
+          <?php if ($currentUser['role'] === 'admin'): ?>
+            <a href="<?= $basePath ?>admin/overview.php" class="btn btn--primary btn--sm">Admin Panel</a>
+          <?php elseif ($currentUser['role'] === 'vendor'): ?>
+            <a href="<?= $basePath ?>vendor/dashboard.php" class="btn btn--primary btn--sm">Vendor Panel</a>
+          <?php else: ?>
+            <a href="<?= $basePath ?>customer_orders.php" class="btn btn--outline btn--sm">My Orders</a>
+          <?php endif; ?>
+          <span class="header-user-tag"><?= htmlspecialchars(explode(' ', $currentUser['name'])[0]) ?></span>
+          <a href="<?= $basePath ?>logout.php" class="btn btn--outline btn--sm" title="Log out">Logout</a>
+        </div>
+      <?php else: ?>
+        <a href="<?= $basePath ?>login.php" class="btn btn--outline btn--sm">Login</a>
+        <a href="<?= $basePath ?>signup.php" class="btn btn--primary btn--sm">Sign Up</a>
+      <?php endif; ?>
     </div>
   </div>
   <div class="search-panel" id="searchPanel">
@@ -56,3 +67,4 @@ $basePath = $basePath ?? '';
 </header>
 
 <main class="page">
+  <?= render_flash() ?>

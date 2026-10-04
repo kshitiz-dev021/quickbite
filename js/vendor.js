@@ -31,12 +31,3 @@ if (uploadInput) {
     }
   });
 }
-
-/* Cancel/Save buttons on the add-item form are visual-only in this
-   prototype — wire them up once the backend endpoint exists. */
-const saveItemBtn = document.getElementById('saveItemBtn');
-if (saveItemBtn) {
-  saveItemBtn.addEventListener('click', () => {
-    alert('Item saved (demo only — hook this up to the backend when it is ready).');
-  });
-}

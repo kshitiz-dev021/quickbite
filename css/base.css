@@ -172,3 +172,45 @@ input, select { font-family: inherit; }
 .status-pill--completed  { background: var(--color-success-bg); color: var(--color-success); }
 .status-pill--cancelled  { background: var(--color-danger-bg);  color: var(--color-danger); }
 .status-pill--approved   { background: var(--color-success-bg); color: var(--color-success); }
+.status-pill--active     { background: var(--color-success-bg); color: var(--color-success); }
+.status-pill--blocked    { background: var(--color-danger-bg);  color: var(--color-danger); }
+.status-pill--rejected   { background: var(--color-danger-bg);  color: var(--color-danger); }
+
+/* Alerts and flash messages */
+.alert {
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--gap-md);
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+}
+.alert--error {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+}
+.alert--success {
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  border: 1px solid rgba(22, 163, 74, 0.2);
+}
+.alert--info {
+  background: var(--color-info-bg);
+  color: var(--color-info);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+}
+
+.header-user-menu {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.header-user-tag {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--color-ink);
+  background: var(--color-warm-cream);
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+}

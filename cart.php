@@ -1,11 +1,12 @@
 <?php
 $pageTitle = 'Your Cart — QuickBite';
 $activeNav = '';
-$demoActive = 'customer';
 $basePath = '';
 $pageScripts = ['js/customer.js'];
 include __DIR__ . '/includes/data.php';
 include __DIR__ . '/includes/header.php';
+
+$deliveryFee = (int)get_setting('delivery_fee', 40);
 ?>
 
 <div class="page-header">
@@ -25,8 +26,8 @@ include __DIR__ . '/includes/header.php';
     <dl class="summary-list">
       <div class="summary-list__row"><dt>Subtotal</dt><dd id="sumSubtotal">Rs. 0</dd></div>
       <div class="summary-list__row"><dt>Discount</dt><dd id="sumDiscount">- Rs. 0</dd></div>
-      <div class="summary-list__row"><dt>Delivery Fee</dt><dd id="sumDelivery">Rs. 40</dd></div>
-      <div class="summary-list__row summary-list__row--total"><dt>Total</dt><dd id="sumTotal">Rs. 40</dd></div>
+      <div class="summary-list__row"><dt>Delivery Fee</dt><dd id="sumDelivery">Rs. <?= $deliveryFee ?></dd></div>
+      <div class="summary-list__row summary-list__row--total"><dt>Total</dt><dd id="sumTotal">Rs. <?= $deliveryFee ?></dd></div>
     </dl>
     <a href="menu.php" class="btn btn--outline btn--block">Continue Shopping</a>
     <a href="checkout.php" class="btn btn--primary btn--block">Proceed to Checkout</a>
@@ -34,6 +35,7 @@ include __DIR__ . '/includes/header.php';
 </div>
 
 <!-- Bridges the PHP data layer to the client-side cart renderer in customer.js -->
+<script>window.PLATFORM_DELIVERY_FEE = <?= $deliveryFee ?>;</script>
 <script type="application/json" id="menuItemsData"><?= json_encode($menu_items) ?></script>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>

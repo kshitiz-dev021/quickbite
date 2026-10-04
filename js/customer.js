@@ -5,7 +5,7 @@
  * so it's safe to load this one file on all four pages.
  */
 
-const DELIVERY_FEE = 40;
+const DELIVERY_FEE = typeof window.PLATFORM_DELIVERY_FEE !== 'undefined' ? window.PLATFORM_DELIVERY_FEE : 40;
 
 /* -----------------------------------------------------------
    Vendor listing search + cuisine filter (vendors.php)
@@ -82,7 +82,7 @@ const DELIVERY_FEE = 40;
   const MENU_ITEMS = JSON.parse(dataTag.textContent);
 
   function findItem(id) {
-    return MENU_ITEMS.find(i => i.id === id);
+    return MENU_ITEMS.find(i => String(i.id) === String(id));
   }
 
   function totals(cart) {
@@ -182,7 +182,7 @@ const DELIVERY_FEE = 40;
     let subtotal = 0;
     let discount = 0;
     Object.entries(cart).forEach(([id, qty]) => {
-      const item = MENU_ITEMS.find(i => i.id === id);
+      const item = MENU_ITEMS.find(i => String(i.id) === String(id));
       if (!item) return;
       subtotal += item.price * qty;
       if (item.was) discount += (item.was - item.price) * qty;
@@ -210,10 +210,43 @@ const DELIVERY_FEE = 40;
       alert('Your cart is empty — add something from the menu first.');
       return;
     }
-    // In the real build this is where we'd POST the order to the backend.
+    
+    // Set hidden cart data field and submit form to backend
+    let cartInput = document.getElementById('cartDataInput');
+    if (!cartInput) {
+      cartInput = document.createElement('input');
+      cartInput.type = 'hidden';
+      cartInput.name = 'cart_data';
+      cartInput.id = 'cartDataInput';
+      form.appendChild(cartInput);
+    }
+    cartInput.value = JSON.stringify(cart);
+
+    // Clear cart in localStorage
     writeCart({});
-    window.location.href = 'index.php?ordered=1';
+    
+    form.submit();
   });
 
   renderSummary();
 })();
+
+/* -----------------------------------------------------------
+   In-Menu Dish Search (menu.php)
+----------------------------------------------------------- */
+(function initMenuSearch() {
+  const searchInput = document.getElementById('menuItemSearch');
+  const items = document.querySelectorAll('.menu-item');
+  if (!searchInput || !items.length) return;
+
+  searchInput.addEventListener('input', () => {
+    const query = searchInput.value.trim().toLowerCase();
+    items.forEach(item => {
+      const name = item.querySelector('.menu-item__name')?.textContent.toLowerCase() || '';
+      const desc = item.querySelector('.menu-item__desc')?.textContent.toLowerCase() || '';
+      const matches = name.includes(query) || desc.includes(query);
+      item.hidden = !matches;
+    });
+  });
+})();
+

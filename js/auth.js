@@ -1,18 +1,15 @@
 document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.frontend-form').forEach(function (form) {
     form.addEventListener('submit', function (event) {
-      event.preventDefault();
-
       const password = form.querySelector('[name="password"]');
       const confirm = form.querySelector('[name="confirm_password"]');
 
       if (password && confirm && password.value !== confirm.value) {
-        alert('Passwords do not match.');
+        event.preventDefault();
+        alert('Passwords do not match. Please verify your passwords.');
         confirm.focus();
-        return;
+        return false;
       }
-
-      alert('This is a frontend prototype. Backend functionality will be connected later.');
     });
   });
 });
