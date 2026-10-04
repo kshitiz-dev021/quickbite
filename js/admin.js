@@ -1,6 +1,25 @@
 /**
- * admin.js — small interactions on the admin dashboard pages.
+ * admin.js — interactions and mobile navigation on admin & vendor dashboards.
  */
+
+document.addEventListener('DOMContentLoaded', () => {
+  const dashNavToggle = document.getElementById('dashNavToggle');
+  const dashSidebar = document.getElementById('dashSidebar');
+
+  if (dashNavToggle && dashSidebar) {
+    dashNavToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dashSidebar.classList.toggle('is-open');
+    });
+
+    // Close menu when clicking outside on mobile
+    document.addEventListener('click', (e) => {
+      if (dashSidebar.classList.contains('is-open') && !dashSidebar.contains(e.target)) {
+        dashSidebar.classList.remove('is-open');
+      }
+    });
+  }
+});
 
 document.addEventListener('click', (e) => {
   // If button was clicked (not a normal link)

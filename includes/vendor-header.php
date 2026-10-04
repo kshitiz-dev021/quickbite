@@ -30,23 +30,37 @@ function vendor_tab_classes(string $tab, string $active): string
 <body>
 
 <div class="dash-shell">
-  <aside class="dash-sidebar">
-    <a class="brand brand--dash" href="<?= $basePath ?>index.php">
-      <img style="width: 200px" src="<?= $basePath ?>images/logo.png" alt="QuickBite" />
-    </a>
-    <div style="padding: 0 1rem 0.75rem; font-size: 0.8rem; color: #8C7B70;">
-      Logged in as: <strong style="color: #2B2118;"><?= htmlspecialchars($currentUser['vendor_name'] ?? $currentUser['name']) ?></strong>
+  <aside class="dash-sidebar" id="dashSidebar">
+    <div class="dash-sidebar__top">
+      <a class="brand brand--dash" href="<?= $basePath ?>index.php">
+        <img class="brand__logo" src="<?= $basePath ?>images/logo.png" alt="QuickBite" />
+      </a>
+      <button type="button" class="dash-nav-toggle" id="dashNavToggle" aria-label="Toggle Navigation">
+        <span class="dash-nav-toggle__bar"></span>
+        <span class="dash-nav-toggle__bar"></span>
+        <span class="dash-nav-toggle__bar"></span>
+      </button>
     </div>
-    <nav class="dash-nav">
-      <a href="dashboard.php"  class="<?= vendor_tab_classes('dashboard', $activeTab ?? '') ?>">Dashboard</a>
-      <a href="menu-items.php" class="<?= vendor_tab_classes('items', $activeTab ?? '') ?>">Menu Items</a>
-      <a href="add-item.php"   class="<?= vendor_tab_classes('add', $activeTab ?? '') ?>">Add Food Item</a>
-      <a href="discounts.php"  class="<?= vendor_tab_classes('discounts', $activeTab ?? '') ?>">Discounts</a>
-      <a href="orders.php"     class="<?= vendor_tab_classes('orders', $activeTab ?? '') ?>">Orders</a>
-      <a href="settings.php"   class="<?= vendor_tab_classes('settings', $activeTab ?? '') ?>">Settings</a>
-      <a href="<?= $basePath ?>index.php" class="dash-nav__link">View Storefront</a>
-    </nav>
-    <a href="<?= $basePath ?>logout.php" class="dash-nav__link dash-nav__link--logout">Logout</a>
+
+    <div class="dash-sidebar__content" id="dashSidebarContent">
+      <div class="dash-user-card">
+        <span class="dash-user-card__label">Logged in as:</span>
+        <strong class="dash-user-card__name"><?= htmlspecialchars($currentUser['vendor_name'] ?? $currentUser['name']) ?></strong>
+        <span class="dash-user-card__badge">Vendor</span>
+      </div>
+
+      <nav class="dash-nav">
+        <a href="dashboard.php"  class="<?= vendor_tab_classes('dashboard', $activeTab ?? '') ?>">Dashboard</a>
+        <a href="menu-items.php" class="<?= vendor_tab_classes('items', $activeTab ?? '') ?>">Menu Items</a>
+        <a href="add-item.php"   class="<?= vendor_tab_classes('add', $activeTab ?? '') ?>">Add Food Item</a>
+        <a href="discounts.php"  class="<?= vendor_tab_classes('discounts', $activeTab ?? '') ?>">Discounts</a>
+        <a href="orders.php"     class="<?= vendor_tab_classes('orders', $activeTab ?? '') ?>">Orders</a>
+        <a href="settings.php"   class="<?= vendor_tab_classes('settings', $activeTab ?? '') ?>">Settings</a>
+        <a href="<?= $basePath ?>index.php" class="dash-nav__link dash-nav__link--storefront">View Storefront</a>
+      </nav>
+
+      <a href="<?= $basePath ?>logout.php" class="dash-nav__link dash-nav__link--logout">Logout</a>
+    </div>
   </aside>
 
   <div class="dash-main">

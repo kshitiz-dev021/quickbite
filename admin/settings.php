@@ -60,13 +60,13 @@ $fromName   = $settings['smtp_from_name'] ?? 'QuickBite';
   <h1 class="dash-panel__title">Platform Settings</h1>
   <p class="dash-panel__subtitle">Delivery fees, commission rates, and Google SMTP email configuration.</p>
 
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+  <div class="settings-grid">
     <!-- Platform Settings Card -->
-    <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1.5rem;">
-      <h2 style="font-size: 1.15rem; margin-top: 0; margin-bottom: 0.5rem; color: var(--color-ink);">Platform Fees</h2>
-      <p style="font-size: 0.82rem; color: #6E6259; margin-bottom: 1.25rem;">Adjust default delivery charge and restaurant commission rate.</p>
+    <div class="settings-card">
+      <h2 class="settings-card__title">Platform Fees</h2>
+      <p class="settings-card__desc">Adjust default delivery charge and restaurant commission rate.</p>
 
-      <form class="item-form" method="post" action="settings.php">
+      <form class="item-form item-form--card" method="post" action="settings.php">
         <input type="hidden" name="save_settings" value="1">
         <label class="field">
           <span class="field__label">Platform Commission (%)</span>
@@ -83,13 +83,13 @@ $fromName   = $settings['smtp_from_name'] ?? 'QuickBite';
     </div>
 
     <!-- Google SMTP Settings Card -->
-    <div style="background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1.5rem;">
-      <h2 style="font-size: 1.15rem; margin-top: 0; margin-bottom: 0.5rem; color: var(--color-ink);">Google SMTP Configuration</h2>
-      <p style="font-size: 0.82rem; color: #6E6259; margin-bottom: 1.25rem;">
+    <div class="settings-card">
+      <h2 class="settings-card__title">Google SMTP Configuration</h2>
+      <p class="settings-card__desc">
         Used to send 6-digit OTP codes for account registration and password resets.
       </p>
 
-      <form class="item-form" method="post" action="settings.php">
+      <form class="item-form item-form--card" method="post" action="settings.php">
         <input type="hidden" name="save_smtp" value="1">
         
         <div class="field-pair">
@@ -107,8 +107,8 @@ $fromName   = $settings['smtp_from_name'] ?? 'QuickBite';
           <label class="field">
             <span class="field__label">Encryption</span>
             <select class="field__input" name="smtp_secure">
-              <option value="tls" <?= $smtpSecure === 'tls' ? 'selected' : '' ?>>TLS (STARTTLS - Port 587)</option>
-              <option value="ssl" <?= $smtpSecure === 'ssl' ? 'selected' : '' ?>>SSL (Direct - Port 465)</option>
+              <option value="tls" <?= $smtpSecure === 'tls' ? 'selected' : '' ?>>TLS (STARTTLS - 587)</option>
+              <option value="ssl" <?= $smtpSecure === 'ssl' ? 'selected' : '' ?>>SSL (Direct - 465)</option>
             </select>
           </label>
           <label class="field">

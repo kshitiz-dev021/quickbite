@@ -74,7 +74,7 @@ $featuredDishes = array_slice($menu_items, 0, 6);
       'coffee & bakery'  => $photo['coffee'],
       'korean & asian'   => 'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=500&q=80',
       'thali & nepali'   => './images/Thali.png',
-      'pasta & italian'  => 'https://images.unsplash.com/photo-1621996346565-e3d5d6281729?w=500&q=80',
+      'pasta & italian'  => './images/pasta.png',
       'desserts'         => './images/dessert.png',
       'drinks'           => $photo['coffee'],
     ];

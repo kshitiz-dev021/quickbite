@@ -34,23 +34,25 @@ $topDishes = $db->query("
     <div class="stat-card"><span class="stat-card__value">Rs. <?= number_format($avgOrder) ?></span><span class="stat-card__label">Avg. Order Value</span></div>
   </div>
 
-  <div class="panel-block" style="margin-top: 1.5rem;">
+  <div class="panel-block">
     <div class="panel-block__header"><h2>Top Selling Items</h2></div>
     <?php if (empty($topDishes)): ?>
       <p style="padding: 1.5rem; color: #6E6259; text-align: center;">No item sales data yet. Top dishes will appear once customer orders are placed.</p>
     <?php else: ?>
-      <table class="data-table">
-        <thead><tr><th>Dish Name</th><th>Quantity Sold</th><th>Total Revenue</th></tr></thead>
-        <tbody>
-          <?php foreach ($topDishes as $td): ?>
-            <tr>
-              <td><strong><?= htmlspecialchars($td['item_name']) ?></strong></td>
-              <td><?= $td['total_qty'] ?> units</td>
-              <td>Rs. <?= number_format($td['total_sales']) ?></td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
+      <div class="table-responsive" style="border: none; box-shadow: none;">
+        <table class="data-table">
+          <thead><tr><th>Dish Name</th><th>Quantity Sold</th><th>Total Revenue</th></tr></thead>
+          <tbody>
+            <?php foreach ($topDishes as $td): ?>
+              <tr>
+                <td><strong><?= htmlspecialchars($td['item_name']) ?></strong></td>
+                <td><?= $td['total_qty'] ?> units</td>
+                <td>Rs. <?= number_format($td['total_sales']) ?></td>
+              </tr>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+      </div>
     <?php endif; ?>
   </div>
 </section>

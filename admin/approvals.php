@@ -31,28 +31,30 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
   <h1 class="dash-panel__title">Pending Vendor Approvals</h1>
   <p class="dash-panel__subtitle">Review and approve new restaurant registrations before they appear to customers.</p>
 
-  <table class="data-table">
-    <thead><tr><th>Owner Name</th><th>Email</th><th>Shop Name</th><th>Cuisine</th><th>Applied On</th><th>Action</th></tr></thead>
-    <tbody>
-      <?php if (empty($admin_approvals)): ?>
-        <tr><td colspan="6" style="text-align: center; color: #6E6259; padding: 2.5rem;">🎉 No pending approvals. All vendors have been reviewed!</td></tr>
-      <?php else: ?>
-        <?php foreach ($admin_approvals as $a): ?>
-          <tr>
-            <td><?= htmlspecialchars($a['vendor']) ?></td>
-            <td><?= htmlspecialchars($a['email']) ?></td>
-            <td><strong><?= htmlspecialchars($a['shop']) ?></strong></td>
-            <td><?= htmlspecialchars($a['cuisine'] ?? '—') ?></td>
-            <td><?= $a['joined'] ?></td>
-            <td data-status-cell>
-              <a href="approvals.php?action=approve&id=<?= $a['id'] ?>" class="table-action-btn table-action-btn--approve">Approve</a>
-              <a href="approvals.php?action=reject&id=<?= $a['id'] ?>" class="table-action-btn table-action-btn--reject" onclick="return confirm('Reject this vendor registration?');">Reject</a>
-            </td>
-          </tr>
-        <?php endforeach; ?>
-      <?php endif; ?>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="data-table">
+      <thead><tr><th>Owner Name</th><th>Email</th><th>Shop Name</th><th>Cuisine</th><th>Applied On</th><th>Action</th></tr></thead>
+      <tbody>
+        <?php if (empty($admin_approvals)): ?>
+          <tr><td colspan="6" style="text-align: center; color: #6E6259; padding: 2.5rem;">🎉 No pending approvals. All vendors have been reviewed!</td></tr>
+        <?php else: ?>
+          <?php foreach ($admin_approvals as $a): ?>
+            <tr>
+              <td><?= htmlspecialchars($a['vendor']) ?></td>
+              <td><?= htmlspecialchars($a['email']) ?></td>
+              <td><strong><?= htmlspecialchars($a['shop']) ?></strong></td>
+              <td><?= htmlspecialchars($a['cuisine'] ?? '—') ?></td>
+              <td><?= $a['joined'] ?></td>
+              <td data-status-cell>
+                <a href="approvals.php?action=approve&id=<?= $a['id'] ?>" class="table-action-btn table-action-btn--approve">Approve</a>
+                <a href="approvals.php?action=reject&id=<?= $a['id'] ?>" class="table-action-btn table-action-btn--reject" onclick="return confirm('Reject this vendor registration?');">Reject</a>
+              </td>
+            </tr>
+          <?php endforeach; ?>
+        <?php endif; ?>
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <?php include __DIR__ . '/../includes/admin-footer.php'; ?>

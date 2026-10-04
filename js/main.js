@@ -60,4 +60,22 @@ if (searchToggle && searchPanel) {
   });
 }
 
+/* Mobile Navigation Menu Toggle */
+const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+const mainNav = document.getElementById('mainNav');
+if (mobileMenuToggle && mainNav) {
+  mobileMenuToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = mainNav.classList.toggle('is-open');
+    mobileMenuToggle.classList.toggle('is-active', isOpen);
+  });
+  document.addEventListener('click', (e) => {
+    if (!mainNav.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+      mainNav.classList.remove('is-open');
+      mobileMenuToggle.classList.remove('is-active');
+    }
+  });
+}
+
 updateCartBadge();
+

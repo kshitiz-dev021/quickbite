@@ -392,7 +392,7 @@ if (empty($menu_items)) {
             'was' => 550,
             'discount' => 11,
             'cat' => 'Pasta & Italian',
-            'img' => 'https://images.unsplash.com/photo-1621996346565-e3d5d6281729?w=500&q=80',
+            'img' => './images/pasta.png',
             'is_active' => 1
         ],
 
