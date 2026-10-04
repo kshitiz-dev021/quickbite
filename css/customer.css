@@ -669,3 +669,46 @@
   outline: none;
   border-color: var(--color-brand);
 }
+
+/* Filter Chips (Pathao-style category & quick filters) */
+.filter-chips {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  margin-bottom: var(--gap-md);
+  scrollbar-width: thin;
+}
+.filter-chips::-webkit-scrollbar {
+  height: 4px;
+}
+.filter-chips::-webkit-scrollbar-thumb {
+  background: var(--color-border-strong);
+  border-radius: 4px;
+}
+.filter-chip {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.45rem 1rem;
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  color: var(--color-ink-soft);
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.filter-chip:hover {
+  border-color: var(--color-brand);
+  color: var(--color-brand);
+}
+.filter-chip.is-active {
+  background: var(--color-brand);
+  border-color: var(--color-brand);
+  color: #fff;
+  font-weight: 600;
+}
+

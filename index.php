@@ -1,5 +1,5 @@
 <?php
-$pageTitle = 'QuickBite — Order Food Online in Kathmandu';
+$pageTitle = 'QuickBite — Order Food Online from Top Restaurants in Kathmandu';
 $activeNav = 'home';
 $basePath = '';
 $pageScripts = ['js/customer.js'];
@@ -21,12 +21,12 @@ $featuredDishes = array_slice($menu_items, 0, 6);
 
 <section class="hero">
   <div class="hero__copy">
-    <h1 class="hero__title">Delicious food from your favorite restaurants</h1>
-    <p class="hero__subtitle">From spicy Kathmandu momos and wood-fired pizzas to juicy burgers and organic coffees — delivered straight to your door in minutes.</p>
+    <h1 class="hero__title">Kathmandu's favorite restaurants delivered fast</h1>
+    <p class="hero__subtitle">Order online from <strong>Dalle, KKFC, Himalayan Java, Roadhouse Cafe, Bota Momo</strong>, and more — delivered hot &amp; fresh to your doorstep.</p>
     <a href="vendors.php" class="btn btn--primary">Explore All Restaurants</a>
   </div>
   <div class="hero__art">
-    <img class="thumb-img" src="<?= $photo['burger'] ?>" alt="Cheese burger with fries, ready for delivery">
+    <img class="thumb-img" src="https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=600&q=80" alt="Delicious Kathmandu momos and food, ready for fast delivery">
   </div>
 </section>
 
@@ -34,7 +34,7 @@ $featuredDishes = array_slice($menu_items, 0, 6);
 <?php if (!empty($offers)): ?>
   <section class="section" style="padding-bottom: 0.5rem;">
     <div class="section__header">
-      <h2 class="section__title">Today's Deals &amp; Vouchers</h2>
+      <h2 class="section__title">Today's Pathao Eats Deals &amp; Vouchers</h2>
       <a href="offers.php" class="section__link">View All Offers</a>
     </div>
     <div class="promo-strip">
@@ -67,14 +67,16 @@ $featuredDishes = array_slice($menu_items, 0, 6);
   <div class="category-grid">
     <?php
     $catImages = [
-      'burgers'   => $photo['burger'],
-      'pizza'     => './images/pizza.png',
-      'momos'     => './images/momo.png',
-      'fast food' => $photo['fries'],
-      'drinks'    => $photo['coffee'],
-      'desserts'  => './images/dessert.png',
-      'thali'     => './images/Thali.png',
-      'pasta'     => 'https://images.unsplash.com/photo-1621996346565-e3d5d6281729?w=500&q=80',
+      'burgers'          => $photo['burger'],
+      'pizza'            => './images/pizza.png',
+      'momos'            => './images/momo.png',
+      'fast food'        => $photo['fries'],
+      'coffee & bakery'  => $photo['coffee'],
+      'korean & asian'   => 'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=500&q=80',
+      'thali & nepali'   => './images/Thali.png',
+      'pasta & italian'  => 'https://images.unsplash.com/photo-1621996346565-e3d5d6281729?w=500&q=80',
+      'desserts'         => './images/dessert.png',
+      'drinks'           => $photo['coffee'],
     ];
     foreach ($menu_categories as $cat):
         $img = $catImages[strtolower($cat['name'])] ?? $photo['burger'];
@@ -91,15 +93,17 @@ $featuredDishes = array_slice($menu_items, 0, 6);
 <section class="section">
   <div class="section__header">
     <h2 class="section__title">Popular Restaurants Near You</h2>
-    <a href="vendors.php" class="section__link">View All (<?= count($vendors) ?>)</a>
+    <a href="vendors.php" class="section__link">View All (<?= count($vendors) ?> places)</a>
   </div>
   <div class="vendor-grid" style="grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem;">
-    <?php foreach (array_slice($vendors, 0, 8) as $v): ?>
+    <?php foreach (array_slice($vendors, 0, 8) as $v): 
+      $badge = $v['badge'] ?? ((float)$v['rating'] >= 4.8 ? 'Top Rated' : 'Popular');
+    ?>
       <a class="vendor-card" href="menu.php?vendor=<?= urlencode($v['id']) ?>">
         <div class="vendor-card__thumb">
           <img class="thumb-img" src="<?= $v['img'] ?>" alt="<?= htmlspecialchars($v['name']) ?>">
-          <?php if ((float)$v['rating'] >= 4.7): ?>
-            <span class="vendor-card__badge">Top Rated</span>
+          <?php if (!empty($badge)): ?>
+            <span class="vendor-card__badge"><?= htmlspecialchars($badge) ?></span>
           <?php endif; ?>
           <span class="vendor-card__time-badge">🕒 <?= htmlspecialchars($v['time']) ?></span>
         </div>
@@ -107,7 +111,7 @@ $featuredDishes = array_slice($menu_items, 0, 6);
           <p class="vendor-card__name"><?= htmlspecialchars($v['name']) ?></p>
           <p class="vendor-card__meta"><?= htmlspecialchars($v['cuisine']) ?></p>
           <div style="display: flex; justify-content: space-between; align-items: baseline; margin-top: 0.35rem;">
-            <p class="vendor-card__rating">★ <?= number_format($v['rating'], 1) ?> (500+)</p>
+            <p class="vendor-card__rating">★ <?= number_format($v['rating'], 1) ?> (1.2k+)</p>
             <span class="vendor-card__min">Min. Rs. <?= number_format($v['min_order']) ?></span>
           </div>
         </div>
@@ -119,14 +123,14 @@ $featuredDishes = array_slice($menu_items, 0, 6);
 <!-- Popular Dishes -->
 <section class="section">
   <div class="section__header">
-    <h2 class="section__title">Popular Dishes</h2>
-    <a href="vendors.php" class="section__link">More Dishes</a>
+    <h2 class="section__title">Top Recommended Dishes</h2>
+    <a href="vendors.php" class="section__link">Explore All Dishes</a>
   </div>
   <ul class="menu-list" id="menuList">
     <?php foreach ($featuredDishes as $item): ?>
       <li class="menu-item" data-cat="<?= htmlspecialchars($item['cat']) ?>">
         <div class="menu-item__thumb"><img class="thumb-img" src="<?= $item['img'] ?>" alt="<?= htmlspecialchars($item['name']) ?>"></div>
-        <div>
+        <div style="flex: 1;">
           <p class="menu-item__name"><?= htmlspecialchars($item['name']) ?></p>
           <p class="menu-item__desc"><?= htmlspecialchars($item['desc']) ?></p>
           <span style="font-size: 0.72rem; color: var(--color-brand); font-weight: 600;">By <?= htmlspecialchars($item['vendor_name']) ?></span>

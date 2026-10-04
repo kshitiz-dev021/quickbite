@@ -4,20 +4,23 @@ $activeTab = 'vendors';
 include __DIR__ . '/../includes/data.php';
 include __DIR__ . '/../includes/admin-header.php';
 
-$db = get_db();
-
-// Handle status change
-if (isset($_GET['action']) && isset($_GET['id'])) {
-    $vId = (int)$_GET['id'];
-    $act = $_GET['action'];
-    if (in_array($act, ['approve', 'block', 'activate'])) {
-        $newStatus = $act === 'block' ? 'blocked' : 'approved';
-        $stmt = $db->prepare("UPDATE vendors SET status = ? WHERE id = ?");
-        $stmt->execute([$newStatus, $vId]);
-        set_flash('success', "Vendor account status updated to {$newStatus}.");
-        header('Location: vendors.php');
-        exit;
+try {
+    $db = get_db();
+    // Handle status change
+    if (isset($_GET['action']) && isset($_GET['id'])) {
+        $vId = (int)$_GET['id'];
+        $act = $_GET['action'];
+        if (in_array($act, ['approve', 'block', 'activate'])) {
+            $newStatus = $act === 'block' ? 'blocked' : 'approved';
+            $stmt = $db->prepare("UPDATE vendors SET status = ? WHERE id = ?");
+            $stmt->execute([$newStatus, $vId]);
+            set_flash('success', "Vendor account status updated to {$newStatus}.");
+            header('Location: vendors.php');
+            exit;
+        }
     }
+} catch (Exception $e) {
+    // Database connection fallback
 }
 ?>
 

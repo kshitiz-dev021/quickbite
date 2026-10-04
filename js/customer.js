@@ -13,22 +13,66 @@ const DELIVERY_FEE = typeof window.PLATFORM_DELIVERY_FEE !== 'undefined' ? windo
 (function initVendorFilter() {
   const searchInput = document.getElementById('vendorSearch');
   const cuisineSelect = document.getElementById('vendorFilter');
+  const filterChips = document.querySelectorAll('.filter-chip');
   const rows = document.querySelectorAll('.vendor-row');
-  if (!searchInput || !rows.length) return;
+  if (!rows.length) return;
+
+  let activeChipFilter = 'all';
 
   function applyFilter() {
-    const text = searchInput.value.trim().toLowerCase();
-    const cuisine = cuisineSelect.value;
+    const text = searchInput ? searchInput.value.trim().toLowerCase() : '';
+    const selectedCuisine = cuisineSelect ? cuisineSelect.value.toLowerCase() : 'all';
+
     rows.forEach(row => {
-      const matchesText = row.dataset.name.toLowerCase().includes(text);
-      const matchesCuisine = cuisine === 'all' || row.dataset.cuisine.includes(cuisine);
-      row.hidden = !(matchesText && matchesCuisine);
+      const name = (row.dataset.name || '').toLowerCase();
+      const cuisine = (row.dataset.cuisine || '').toLowerCase();
+      const badge = (row.dataset.badge || '').toLowerCase();
+      const rating = parseFloat(row.dataset.rating || '0');
+      const time = (row.dataset.time || '').toLowerCase();
+
+      // Text query match
+      const matchesText = !text || name.includes(text) || cuisine.includes(text) || badge.includes(text);
+
+      // Dropdown cuisine filter match
+      const matchesSelect = selectedCuisine === 'all' || cuisine.includes(selectedCuisine);
+
+      // Quick Chip filter match
+      let matchesChip = true;
+      if (activeChipFilter === 'popular') {
+        matchesChip = rating >= 4.7 || badge.includes('popular');
+      } else if (activeChipFilter === 'top-rated') {
+        matchesChip = rating >= 4.8 || badge.includes('top rated');
+      } else if (activeChipFilter === 'fastest') {
+        matchesChip = time.includes('15-') || time.includes('20-') || badge.includes('express');
+      } else if (activeChipFilter !== 'all') {
+        matchesChip = cuisine.includes(activeChipFilter.toLowerCase());
+      }
+
+      row.hidden = !(matchesText && matchesSelect && matchesChip);
     });
   }
 
-  searchInput.addEventListener('input', applyFilter);
-  cuisineSelect.addEventListener('change', applyFilter);
+  if (searchInput) searchInput.addEventListener('input', applyFilter);
+  if (cuisineSelect) cuisineSelect.addEventListener('change', applyFilter);
+
+  filterChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      filterChips.forEach(c => c.classList.remove('is-active'));
+      chip.classList.add('is-active');
+      activeChipFilter = chip.dataset.filter || 'all';
+      if (cuisineSelect && activeChipFilter !== 'all' && !['popular', 'top-rated', 'fastest'].includes(activeChipFilter)) {
+        // Sync dropdown if matching cuisine
+        Array.from(cuisineSelect.options).forEach(opt => {
+          if (opt.value.toLowerCase() === activeChipFilter.toLowerCase()) {
+            cuisineSelect.value = opt.value;
+          }
+        });
+      }
+      applyFilter();
+    });
+  });
 })();
+
 
 /* -----------------------------------------------------------
    Food menu: category tabs + add to cart (menu.php)
